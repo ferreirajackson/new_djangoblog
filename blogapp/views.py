@@ -218,11 +218,11 @@ def ChangeTag(request, pk):
 def CreatePost(request):
     print("return this")
     cat = False
-    set = CreatePostForm()
+    # set = CreatePostForm()
     if request.method=='GET':
         cat = request.GET.get('add')
     if cat:
-        set = CreatePostForm(data=request.GET)
+        # set = CreatePostForm(data=request.GET)
         print(set)
         print('see whts in here')
         find = Temp.objects.all().exists()
@@ -245,7 +245,7 @@ def CreatePost(request):
     else:
         categor= ''
     # data = categor
-    three = set
+    # three = set
     print(request.method)
     if request.method=='POST':
         print('got here')
@@ -263,18 +263,18 @@ def CreatePost(request):
                 temp_categories.delete()
             post.save()
             # Send email
-            all_users = Newsletter.objects.filter(status='ok')
-            print(all_users)
-            if all_users.exists():
-                for user in all_users:
-                    print(user, 'each of')
-                    email_user = str(user.email)
-                    message = 'NOVO POST GALERA'
-                    send_mail('Teste', message, 'ccfitgym@gmail.com', [email_user], fail_silently=False)
+            # all_users = Newsletter.objects.filter(status='ok')
+            # print(all_users)
+            # if all_users.exists():
+            #     for user in all_users:
+            #         print(user, 'each of')
+            #         email_user = str(user.email)
+            #         message = 'NOVO POST GALERA'
+            #         send_mail('Teste', message, 'ccfitgym@gmail.com', [email_user], fail_silently=False)
             return HttpResponseRedirect(reverse_lazy('blog:management'))
     else:
-        # form = CreatePostForm()
-        form = three
+        form = CreatePostForm()
+        # form = three
     # context = {'data': data}
     print('oficial', form)
     return render(request, 'blogapp/create_post.html', {'form': form, 'data':categor})
