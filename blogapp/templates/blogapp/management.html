@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% extends 'blogapp/base.html' %}
+{% block body_block %}
+
+
+<!-- Lógica das tags -->
+<!--
+    <div class="col-lg-3 mx-auto">
+      <div class="list-group">
+        <a href="/management/" class="list-group-item list-group-item-action">All Products</a>
+        {% for category in categories %}
+        <a href="/management/?category={{category.id}}">{{category.name}}</a>
+        {% endfor %}
+      </div>
+    </div> -->
+
+     <div class="main">
+      <div class="blog">
+         <input type="text" class="blog__search" placeholder="Pesquise aqui...">
+         <div class="blog__tags">
+           <button type="button" class="blog__tag">#Intercâmbio</button>
+           <button type="button" class="blog__tag">#Cidadania</button>
+           <button type="button" class="blog__tag">#Vida no Exterior</button>
+           <button type="button" class="blog__tag">#Dicas da Sel</button>
+           <button type="button" class="blog__tag">#Itália</button>
+           <button type="button" class="blog__tag">#Comparativos</button>
+           <button type="button" class="blog__tag">#Brasil</button>
+           <button type="button" class="blog__tag">#Preços</button>
+           <button type="button" class="blog__tag">#Comparativo</button>
+           <button type="button" class="blog__tag">#Viagens</button>
+           <button type="button" class="blog__tag">#Alimentação</button>
+           <button type="button" class="blog__tag">#Alimentação</button>
+         </div>
+         <div class="blog__cards">
+
+          {% for post in posts %}
+          <div class="blog__card">
+            <img src="../../../static/img/post1_intercambio.PNG" alt="" class="blog__card--img">
+            <div class="blog__card--title">{{ post.title }}</div>
+            <div class="blog__card--info">
+              <div class="blog__card--info-time"><i class="far fa-clock"></i> {{ post.date_creation|timesince }}</div>
+              <div class="blog__card--info-time"><i class="far fa-clock"></i> {{ post.date_creation }} </div>
+              <div class="blog__card--info-name"><i class="fas fa-user"></i> {{ post.name }}</div>
+            </div>
+            <div class="blog__card--action">
+              <a href="{% url 'blogapp:edit_post' post.pk %}" class="blog__card--action-read link"><i class="far fa-eye"></i></a>
+              <a href="{% url 'blogapp:edit_post' post.pk %}" class="blog__card--action-update link"><i class="fas fa-pencil-alt"></i></a>
+              <a href="{% url 'blogapp:delete_post' post.pk %}" class="blog__card--action-delete link"><i class="fas fa-trash"></i></a>
+              <!-- <a href="{% url 'blogapp:delete_post' post.pk %}">DELETE POST</a> -->
+            </div>
+          </div>
+          {% endfor %}
+         </div>
+      </div>
+    </div>
+  {% endblock %}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% extends 'blogapp/base.html' %}
+{% load widget_tweaks %}
+{% block body_block %}
+
+
+<div class="main">
+  <div class="blog">
+    <form method="GET">
+      <div class="blog__tags">
+        {% if data %}
+          {% for category in data %}
+            <button type="button" class="blog__tag" onclick="location.href='{% url 'blogapp:delete_category' value=category %}'">{{category}} <i class="fas fa-minus-circle center"></i></button>
+          {% endfor %}
+        {% endif %}
+        <div class="btn">Editar Tags</div>
+      </div>
+    </form>
+
+    <div class="blog__newPost">
+      <form method="POST">
+        {% csrf_token %}
+            {{ form.media }}
+            {% render_field form.title class="blog__newPost-title" placeholder="Título do artigo" %}
+            {% render_field form.body class="blog__newPost-article" placeholder="Teste"%}
+            <div class="panel">
+              <div class="load">
+                <div class="btn_upload">
+                  <input type="file" id="upload_file" name="" onclick="uploadImg()"> Selecionar capa </div>
+                  <div class="processing_bar"></div>
+                  <div class="success_box"></div>
+                </div>
+              </div>
+              <div class="error_msg"></div>
+              <div class="uploaded_file_view" id="uploaded_view">
+                <span class="file_remove">X</span>
+              </div>
+            </div>
+            <hr>
+            <div class="blog__newPost-btnBox">
+              <button type="button" class="blog__newPost-btnBox--btn">Salvar rascunho</button>
+              <button type="submit" class="blog__newPost-btnBox--btn">Publicar</button>
+            </div>
+        </form>
+          <!-- form principal fim -->
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+    {% block extra_script %}
+<script>
+  var perfEntries = performance.getEntriesByType("navigation");
+  if (perfEntries[0].type === "back_forward") {
+  location.href ="{% url 'blog:delete_all_categories' %}"
+}
+</script>
+{% endblock %}

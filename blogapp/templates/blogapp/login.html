@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rosarivo&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../static/css/style.css">
+  <script src="../../../static/js/main.js"></script>
+  <title>Selma Fernandes</title>
+</head>
+<body>
+  <div class="container">
+     <div class="login-box">
+      <div class="login">
+        <div class="login__logo">Selma Fernandes</div>
+          <form method="post" id="loginForm">
+            {% csrf_token %}
+            <div class="sub-title">Login</div>
+            <input type="email" name="email" id="email" class="login__input" placeholder="E-mail">
+            <input type="password" name="password" id="password" c class="login__input" placeholder="Senha">
+            <button type="submit"  class="login__btn">Acessar</button>
+            <button type="button" class="login__btn login__btn-2" onclick="location.href='{% url 'blogapp:signup' %}'" name="button">Novo Usuário</button>
+          </form>
+      </div>
+    </div>
+  </div>
+  <!-- <script src="../../../static/js/main.js"></script>  -->
+</body>
+</html>

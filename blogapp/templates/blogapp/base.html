@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rosarivo&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../../../static/css/style.css">
+    <script src="../../../static/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <title>Selma Fernandes</title>
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="navbar__logo">Selma Fernandes</div>
+            <div class="navbar__user">
+                <div class="navbar__user--name">{{ request.session.user }}</div>
+                <button type="button" class="navbar__user--btn" onclick="location.href='{% url 'blog:logout' %}'">Sair</button>
+            </div>
+        </div>
+        <div class="sidebar">
+            <button type="button" class="sidebar__item" onclick="location.href='{% url 'blogapp:management' %}';">Blog</button>
+            <button type="button" class="sidebar__item" onclick="location.href='{% url 'blogapp:create_post' %}';">Novo Post</button>
+            <button type="button" class="sidebar__item">Leads</button>
+        </div>
+        {% block body_block %}
+        {% endblock %}
+        {% block extra_script %}
+        {% endblock %}
+    </div>
+</body>
+</html>
