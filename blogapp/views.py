@@ -80,17 +80,49 @@ def Signup(request):
 
 @login_required
 def Management(request):
+    # if request.method == 'GET': # If the form is submitted
+    #     search_query = request.GET.get('search_box', None)
+    #     print('here inside')
+    #     print(search_query)
+        # Do whatever you need with the word the user looked for
     categories = Category.get_all_categories()
-    print(request.user)
-    posts = Post.get_all_posts()
+    # print(request.user)
+    # posts = Post.get_all_posts()
     categoryID = request.GET.get('category')
+    search_query = request.GET.get('search_box', None)
+    message = ''
     if categoryID:
-        posts = Post.get_all_posts_by_categoryid(categoryID)
+        print(categoryID)
+        print('just sees here')
+        search = Category.objects.get(pk=categoryID)
+        search_found = search.name
+        print(search_found)
+        posts = Post.objects.filter(categories__contains=search_found)
+        if not posts:
+            print('anything')
+            # posts = Post.get_all_posts().order_by('-date_creation');
+            # return message for this
+            message = 'Nothing found for ' + search_found
+        print(search_query)
+    elif search_query:
+        # posts = Post.get_all_posts_by_categoryid(categoryID)
+        posts = Post.objects.filter(title__contains=search_query)
+        if not posts:
+            print('anything')
+            posts = Post.get_all_posts().order_by('-date_creation');
+            # return message for this
+            message = 'Nothing found for ' + search_query
+        print(posts)
+        print('search')
     else:
         posts = Post.get_all_posts().order_by('-date_creation');
+        print('postsssssssssss', posts)
+        print(type(posts))
     data = {}
     data['categories'] = categories
     data['posts'] = posts
+    if message != '':
+        data['message'] = message
     return render(request, 'blogapp/management.html', data)
 
 #####################################################################################################################################
@@ -257,6 +289,13 @@ def CreatePost(request):
             post.name = username.first_name
             temp_categories = Temp.objects.all().first()
             if temp_categories:
+                # insert to category table here
+                categor_unit = temp_categories.categories.split(',')
+                for category in categor_unit:
+                    p = Category(name=category, description=category)
+                    p.save(force_insert=True)
+                print(categor_unit)
+                print(type(categor_unit))
                 print('=-=-=-=-=-=-=-=-=-=-=------------------------------==============================================')
                 print(temp_categories.categories)
                 post.categories = temp_categories.categories
@@ -313,6 +352,11 @@ def DeletePost(request, pk):
     posts = get_object_or_404(Post, pk=pk)
     print(posts)
     print(request.method)
+    search = Post.objects.get(pk=pk)
+    list_tags = search.categories.split(',')
+    for list in list_tags:
+        print(list)
+        Category.objects.filter(name=list).delete()
     if request.method == 'GET':
         posts.delete()
     return HttpResponseRedirect(reverse_lazy('blog:management'))

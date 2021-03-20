@@ -16,8 +16,18 @@
 
      <div class="main">
       <div class="blog">
-         <input type="text" class="blog__search" placeholder="Pesquise aqui...">
-         <div class="blog__tags">
+         <!-- <input type="text" class="blog__search" placeholder="Pesquise aqui..."> -->
+         <form type="get">
+            <input  id="search_box" type="text" name="search_box"  class="blog__search" placeholder="Pesquise aqui..." >
+        </form>
+        {% for category in categories %}
+          {% if categories %}
+            <div class="blog__tags">
+              <button type="button" class="blog__tag"><a href="/management/?category={{category.id}}">#{{category.name}}</a></button>
+            </div>
+          {% endif %}
+        {% endfor %}
+         <!-- <div class="blog__tags">
            <button type="button" class="blog__tag">#Intercâmbio</button>
            <button type="button" class="blog__tag">#Cidadania</button>
            <button type="button" class="blog__tag">#Vida no Exterior</button>
@@ -30,9 +40,9 @@
            <button type="button" class="blog__tag">#Viagens</button>
            <button type="button" class="blog__tag">#Alimentação</button>
            <button type="button" class="blog__tag">#Alimentação</button>
-         </div>
+         </div> -->
+         {{message}}
          <div class="blog__cards">
-
           {% for post in posts %}
           <div class="blog__card">
             <img src="../../../static/img/post1_intercambio.PNG" alt="" class="blog__card--img">
